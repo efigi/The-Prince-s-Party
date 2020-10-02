@@ -1,0 +1,78 @@
+[gd_scene load_steps=15 format=2]
+
+[ext_resource path="res://images/characters/prince/up_stand.png" type="Texture" id=1]
+[ext_resource path="res://images/characters/prince/up_walk1.png" type="Texture" id=2]
+[ext_resource path="res://images/characters/prince/up_walk2.png" type="Texture" id=3]
+[ext_resource path="res://images/characters/prince/pose1.png" type="Texture" id=4]
+[ext_resource path="res://images/characters/prince/pose3.png" type="Texture" id=5]
+[ext_resource path="res://images/characters/prince/pose2.png" type="Texture" id=6]
+[ext_resource path="res://src/characters/Character.gd" type="Script" id=7]
+[ext_resource path="res://src/states/Idle.tscn" type="PackedScene" id=8]
+[ext_resource path="res://src/states/Moving.tscn" type="PackedScene" id=9]
+[ext_resource path="res://fonts/Pixels TEXT.ttf" type="DynamicFontData" id=10]
+[ext_resource path="res://src/states/Dragged.tscn" type="PackedScene" id=11]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 2 ), ExtResource( 1 ), ExtResource( 3 ) ],
+"loop": true,
+"name": "up",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 4 ), ExtResource( 6 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "pose",
+"speed": 4.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 8.60755, 14.2105 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 10 )
+
+[node name="Character" type="KinematicBody2D" groups=[
+"allies",
+]]
+input_pickable = true
+script = ExtResource( 7 )
+
+[node name="Sprite" type="AnimatedSprite" parent="."]
+frames = SubResource( 1 )
+animation = "up"
+frame = 1
+playing = true
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.521469, 1.35 )
+shape = SubResource( 2 )
+
+[node name="Addons" type="Node2D" parent="."]
+
+[node name="StateLabel" type="Label" parent="Addons"]
+margin_left = -49.5654
+margin_top = 11.2116
+margin_right = 51.0
+margin_bottom = 23.2116
+custom_fonts/font = SubResource( 3 )
+text = "State"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="States" type="Node2D" parent="."]
+
+[node name="Idle" parent="States" instance=ExtResource( 8 )]
+
+[node name="Moving" parent="States" instance=ExtResource( 9 )]
+
+[node name="Dragged" parent="States" instance=ExtResource( 11 )]
+
+[node name="Timers" type="Node2D" parent="."]
+
+[node name="Attack" type="Timer" parent="Timers"]
+one_shot = true
+autostart = true
+[connection signal="input_event" from="." to="." method="_on_Player_input_event"]
+[connection signal="timeout" from="Timers/Attack" to="." method="_on_Attack_timeout"]

@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/Battle_-_Barbarians_Arrive.ogg-177330f9950761ece47c86c5e6af01e9.oggstr"
+
+[deps]
+
+source_file="res://music/Battle_-_Barbarians_Arrive.ogg"
+dest_files=[ "res://.import/Battle_-_Barbarians_Arrive.ogg-177330f9950761ece47c86c5e6af01e9.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0
